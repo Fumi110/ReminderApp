@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>LIFF Test</title>
+  <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+</head>
+<body>
+  <h1>LIFF Profile Test</h1>
+  <pre id="output">Loading...</pre>
+
+  <script>
+    async function main() {
+      const output = document.getElementById("output");
+
+      try {
+        // ← あなたの LIFF ID を挿入
+        await liff.init({ liffId: "2008474263-nWyxBqlY" });
+
+        // ログインしてなければログイン
+        if (!liff.isLoggedIn()) {
+          liff.login();
+          return;
+        }
+
+        // プロフィール取得
+        const profile = await liff.getProfile();
+
+        output.textContent = JSON.stringify(profile, null, 2);
+      } catch (e) {
+        output.textContent = "Error:\n" + e;
+      }
+    }
+
+    main();
+  </script>
+</body>
+</html>

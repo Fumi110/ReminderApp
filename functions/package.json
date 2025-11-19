@@ -1,0 +1,27 @@
+{
+  "name": "reminderapp-functions",
+  "version": "3.1.0",
+  "description": "Cloud Functions for ReminderApp Ver.3.1",
+  "main": "index.js",
+  "type": "commonjs",
+  "engines": {
+    "node": "20"
+  },
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "deploy": "firebase deploy --only functions",
+    "lint": "eslint .",
+    "init:firestore": "node initFirestore.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "5.0.0",
+    "node-fetch": "3.3.2"
+  },
+  "devDependencies": {
+    "eslint": "8.57.0",
+    "eslint-config-google": "0.14.0"
+  },
+  "private": true
+}

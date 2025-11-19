@@ -1,0 +1,69 @@
+{
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs20",
+    "ignore": [
+      "node_modules",
+      ".git",
+      ".github",
+      "firebase-debug.log",
+      ".env"
+    ],
+    "env": {
+      "FIREBASE_SKIP_ENV_LOADING": "true"
+    }
+  },
+
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+
+  "hosting": {
+    "public": "webapp/dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "cleanUrls": true,
+    "rewrites": [
+      { "source": "**", "destination": "/index.html" }
+    ],
+    "ssl": {
+      "cert": "cert.pem",
+      "key": "key.pem"
+    }
+  },
+
+  "emulators": {
+    "ui": { "host": "127.0.0.1", "port": 4900 },
+
+    "functions": {
+      "host": "127.0.0.1",
+      "port": 4903
+    },
+
+    "firestore": {
+      "host": "127.0.0.1",
+      "port": 4904,
+      "rules": "firestore.rules",
+      "indexes": "firestore.indexes.json"
+    },
+
+    "hosting": {
+      "host": "127.0.0.1",
+      "port": 5000
+    },
+
+    "singleProjectMode": true,
+    "auth": {
+      "host": "127.0.0.1",
+      "port": 9099
+    }
+  },
+
+  "projects": {
+    "default": "management-app-746a3"
+  }
+}

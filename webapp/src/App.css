@@ -1,0 +1,82 @@
+// /src/App.jsx
+// ReminderApp Ver.3.1 — UI + Routing（住人UI + 管理UI ネスト構成）
+
+import { Routes, Route, useLocation } from "react-router-dom";
+import useAppStore from "./store/appStore";
+
+// 住人向け
+import Home from "./components/Home";
+import MealVote from "./components/MealVote";
+import DutyCalendar from "./components/DutyCalendar";
+// import Account from "./components/Account";
+
+// 管理者向け
+import AdminLayout from "./components/admin/AdminLayout";
+import AdminHome from "./components/admin/AdminHome";
+import FacilityHome from "./components/admin/FacilityHome";
+import MealHome from "./components/admin/MealHome";
+import AdminDeadline from "./components/admin/AdminDeadline";
+import UserManager from "./components/admin/UserManager";
+
+// 共通 BottomTabBar（住人用）
+import BottomTabBar from "./components/BottomTabBar";
+
+export default function App() {
+  const isAuthenticated = useAppStore((s) => s.isAuthenticated);
+  const userProfile = useAppStore((s) => s.userProfile);
+  const location = useLocation();
+
+  // -------------------------------
+  // 未ログイン（認証中 UI）
+  // -------------------------------
+  if (!isAuthenticated || !userProfile) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen bg-gray-50">
+        <div className="bg-white shadow-md rounded-lg p-8 text-center">
+          <h1 className="text-2xl font-bold mb-4">ReminderApp へようこそ</h1>
+          <p className="text-gray-600 mb-4">
+            学寮の当番管理・食数投票・出欠管理システム
+          </p>
+
+          <div className="mt-4 text-blue-600 font-semibold">
+            LINE アカウントで自動ログイン中…
+          </div>
+
+          <div className="text-xs text-gray-400 mt-2">
+            ※ 初回アクセス時は LINE 認証画面に遷移します
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // -------------------------------
+  // ログイン済（UI レンダリング）
+  // -------------------------------
+  return (
+    <div className="min-h-screen bg-slate-50 pb-20">
+      <Routes>
+        {/* 住民向け */}
+        <Route path="/" element={<Home />} />
+        <Route path="/meal" element={<MealVote />} />
+        <Route path="/duty" element={<DutyCalendar />} />
+        {/* <Route path="/account" element={<Account />} /> */}
+
+        {/* 管理 UI（ネストルート） */}
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<AdminHome />} />
+          <Route path="facility" element={<FacilityHome />} />
+          <Route path="meal" element={<MealHome />} />
+          <Route path="deadlines" element={<AdminDeadline />} />
+          <Route path="users" element={<UserManager />} />
+        </Route>
+
+        {/* fallback */}
+        <Route path="*" element={<div className="p-6">404 Not Found</div>} />
+      </Routes>
+
+      {/* 管理画面では住人用タブは非表示 */}
+      {!location.pathname.startsWith("/admin") && <BottomTabBar />}
+    </div>
+  );
+}

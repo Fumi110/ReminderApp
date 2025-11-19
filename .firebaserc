@@ -1,0 +1,9 @@
+﻿{
+  "projects": {
+    "default": "management-app-746a3"
+  },
+  "targets": {},
+  "emulators": {
+    "disableEnv": true
+  }
+}
